@@ -4,9 +4,9 @@ import Image from "next/image";
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-4xl bg-white rounded-3xl shadow-lg overflow-hidden">
+      <div className="flex w-full max-w-4xl bg-white rounded-3xl shadow-lg overflow-hidden  mx-2 ">
         
-        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center ">
           {children}
         </div>
         

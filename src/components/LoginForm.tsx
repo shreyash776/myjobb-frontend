@@ -33,10 +33,10 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleLogin} className="space-y-5">
-      <h2 className="text-3xl font-bold mb-2">Welcome back!</h2>
-      <p className="text-gray-500 mb-4">Login to continue with <b>MYjobb</b>.</p>
+      <h2 className="text-3xl font-bold mb-2 text-black">Welcome back!</h2>
+      <p className="text-black mb-4">Login to continue with <b>Myjobb</b>.</p>
       <input
-        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full border rounded-full text-black p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="email"
         placeholder="Email"
         required
@@ -44,7 +44,7 @@ export default function LoginForm() {
         onChange={e => setEmail(e.target.value)}
       />
       <input
-        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full border text-black rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="password"
         placeholder="Password"
         required

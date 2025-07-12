@@ -34,10 +34,10 @@ export default function SignupForm() {
 
   return (
     <form onSubmit={handleSignup} className="space-y-5">
-      <h2 className="text-3xl font-bold mb-2">Create Account</h2>
-      <p className="text-gray-500 mb-4">Sign up to get started with <b>Tuga’s App</b>.</p>
+      <h2 className="text-3xl text-black font-bold mb-2">Create Account</h2>
+      <p className="text-black mb-4">Sign up to get started with <b>Myjobb</b>.</p>
       <input
-        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full text-black border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="text"
         placeholder="Username"
         required
@@ -45,7 +45,7 @@ export default function SignupForm() {
         onChange={e => setUsername(e.target.value)}
       />
       <input
-        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full text-black border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="email"
         placeholder="Email"
         required
@@ -53,7 +53,7 @@ export default function SignupForm() {
         onChange={e => setEmail(e.target.value)}
       />
       <input
-        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full text-black border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="password"
         placeholder="Password"
         required
@@ -61,7 +61,7 @@ export default function SignupForm() {
         onChange={e => setPassword(e.target.value)}
       />
       <button
-        className="w-full bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
+        className="w-full text-black bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
         type="submit"
         disabled={loading}
       >

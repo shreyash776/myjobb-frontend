@@ -1,0 +1,79 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+export default function SignupForm() {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setMsg("");
+    
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (res.ok) {
+      
+      localStorage.setItem("signup_email", email);
+      router.push("/otp");
+    } else {
+      setMsg(data.message || "Signup failed. Try again.");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSignup} className="space-y-5">
+      <h2 className="text-3xl font-bold mb-2">Create Account</h2>
+      <p className="text-gray-500 mb-4">Sign up to get started with <b>Tuga’s App</b>.</p>
+      <input
+        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        type="text"
+        placeholder="Username"
+        required
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+      />
+      <input
+        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        type="email"
+        placeholder="Email"
+        required
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+      />
+      <input
+        className="w-full border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+        type="password"
+        placeholder="Password"
+        required
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+      <button
+        className="w-full bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? "Signing up..." : "Sign up"}
+      </button>
+      {msg && <div className="text-red-500 text-center">{msg}</div>}
+      <div className="text-center text-gray-400 mt-4">
+        Already have an account?{" "}
+        <Link href="/" className="text-green-700 font-semibold hover:underline">
+          Login
+        </Link>
+      </div>
+    </form>
+  );
+}

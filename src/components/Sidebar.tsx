@@ -1,5 +1,5 @@
-
-import { Home, Table, BarChart2, Settings, LogOut } from "lucide-react";
+"use client";
+import { Home, Table, BarChart2, Settings, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -10,9 +10,19 @@ const navItems = [
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
-export default function Sidebar({ active }: { active?: string }) {
+export default function Sidebar({ onClose }: { onClose?: () => void }) {
   return (
-    <aside className="h-screen w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg">
+    <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg relative">
+      
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 md:hidden text-green-400"
+          aria-label="Close sidebar"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
       <div className="mb-10">
         <span className="text-2xl font-extrabold text-green-400">Myjobb</span>
       </div>
@@ -22,9 +32,9 @@ export default function Sidebar({ active }: { active?: string }) {
             key={item.name}
             href={item.href}
             className={clsx(
-              "flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-green-700 transition",
-              active === item.name ? "bg-green-600" : ""
+              "flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-green-700 transition"
             )}
+            onClick={onClose}
           >
             <item.icon className="w-5 h-5" />
             <span className="font-medium">{item.name}</span>

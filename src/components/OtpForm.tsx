@@ -61,7 +61,7 @@ export default function OtpForm() {
       <p className="text-black mb-4">
         Enter the OTP sent to <b>{email}</b>
       </p>
-     <div className="flex flex-wrap justify-center gap-2">
+     <div className="flex flex-wrap justify-center gap-1">
   {otp.map((digit, idx) => (
     <input
       key={idx}

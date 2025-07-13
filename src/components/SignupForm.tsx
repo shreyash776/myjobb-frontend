@@ -8,12 +8,12 @@ export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+//   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     setMsg("");
     
     const res = await fetch("/api/auth/signup", {
@@ -22,7 +22,7 @@ export default function SignupForm() {
       body: JSON.stringify({ username, email, password }),
     });
     const data = await res.json();
-    setLoading(false);
+    // setLoading(false);
     if (res.ok) {
       
       localStorage.setItem("signup_email", email);

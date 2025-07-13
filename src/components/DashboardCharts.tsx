@@ -54,30 +54,51 @@ export default function DashboardCharts({ products }: DashboardChartsProps) {
       
       <div className="bg-black rounded-xl shadow p-4 h-100">
         <h3 className="font-semibold mb-2 text-black">Category Distribution</h3>
-        <ResponsivePie
-          data={categoryCounts}
-          margin={{ top: 20, right: 20, bottom: 60, left: 20 }}
-          innerRadius={0.5}
-          padAngle={1}
-          cornerRadius={5}
-          colors={{ scheme: "greens" }}
-          borderWidth={1}
-          borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-          enableArcLabels={false}
-          legends={[
-            {
-              anchor: "bottom",
-              direction: "row",
-              justify: false,
-              translateY: 36,
-              itemWidth: 80,
-              itemHeight: 18,
-              itemsSpacing: 0,
-              symbolSize: 18,
-              symbolShape: "circle",
-            },
-          ]}
-        />
+          <ResponsivePie
+    data={categoryCounts}
+    margin={{ top: 20, right: 20, bottom: 60, left: 20 }}
+    innerRadius={0.5}
+    padAngle={1}
+    cornerRadius={5}
+    colors={{ scheme: "greens" }}
+    borderWidth={1}
+    borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
+    enableArcLabels={false}
+    arcLinkLabelsTextColor="#fff"
+    arcLabelsTextColor="#000"
+    theme={{
+      tooltip: {
+        container: {
+          background: "#fff",
+          color: "#000",
+          fontWeight: "bold",
+        },
+      },
+      legends: {
+        text: {
+          fill: "#fff",
+        },
+      },
+      labels: {
+        text: {
+          fill: "#fff",
+        },
+      },
+    }}
+    legends={[
+      {
+        anchor: "bottom",
+        direction: "row",
+        justify: false,
+        translateY: 36,
+        itemWidth: 80,
+        itemHeight: 18,
+        itemsSpacing: 0,
+        symbolSize: 18,
+        symbolShape: "circle",
+      },
+    ]}
+  />
       </div>
       
       <div className="bg-white rounded-xl shadow p-4 h-100">
@@ -88,12 +109,26 @@ export default function DashboardCharts({ products }: DashboardChartsProps) {
           indexBy="range"
           margin={{ top: 20, right: 20, bottom: 40, left: 40 }}
           padding={0.4}
-          colors={{ scheme: "greens" }}
+          colors="#22c55e"
           axisBottom={{ tickSize: 5, tickPadding: 5, legend: "Price Range", legendPosition: "middle", legendOffset: 32 }}
           axisLeft={{ tickSize: 5, tickPadding: 5, legend: "Products", legendPosition: "middle", legendOffset: -32 }}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor="#000000"
+          theme={{
+    labels: {
+      text: {
+        fill: "#000000", 
+      },
+    },
+    tooltip: {
+      container: {
+        color: "#000000", 
+        background: "#ffffff", 
+      },
+    },
+    
+  }}
         />
       </div>
      
@@ -105,12 +140,25 @@ export default function DashboardCharts({ products }: DashboardChartsProps) {
           indexBy="category"
           margin={{ top: 20, right: 20, bottom: 40, left: 40 }}
           padding={0.4}
-          colors={{ scheme: "greens" }}
+          colors="#22c55e"
           axisBottom={{ tickSize: 5, tickPadding: 5, legend: "Category", legendPosition: "middle", legendOffset: 32 }}
           axisLeft={{ tickSize: 5, tickPadding: 5, legend: "Avg Rating", legendPosition: "middle", legendOffset: -32 }}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor="#222"
+          theme={{
+            labels: {
+              text: {
+                fill: "#222", 
+              },
+            },
+            tooltip: {
+              container: {
+                color: "#222", 
+                background: "#ffffff", 
+              },
+            },
+          }}
         />
       </div>
     </div>

@@ -17,9 +17,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   <div className="fixed inset-0 z-40 flex">
     
     <div
-      className="fixed inset-0 bg-black bg-opacity-30 z-0"
-      onClick={() => setSidebarOpen(false)}
-    />
+  className="fixed inset-0 bg-black/30 backdrop-blur-sm z-0"
+  onClick={() => setSidebarOpen(false)}
+/>
+
     
     <div className="relative z-10 w-64 h-full">
       <Sidebar onClose={() => setSidebarOpen(false)} />

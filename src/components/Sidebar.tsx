@@ -3,6 +3,7 @@ import { Home, Table, BarChart2, Settings, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { apiFetch } from "@/utils/api";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
@@ -14,16 +15,16 @@ const navItems = [
 export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const router = useRouter();
 
-  const handleLogout = async () => {
-    await fetch("/api/users/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    router.push("/"); // Redirect to home page
-  };
+const handleLogout = async () => {
+  await apiFetch("/api/users/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+  router.push("/");
+};
 
-  return (
-    <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg sticky top-0 h-screen relative">
+return (
+  <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg sticky top-0 h-screen relative">
       {onClose && (
         <button
           onClick={onClose}

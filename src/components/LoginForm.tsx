@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { apiFetch } from "@/utils/api";
 import Link from "next/link";
 
 export default function LoginForm() {
@@ -11,25 +11,24 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMsg("");
-    
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    setLoading(false);
-    if (res.ok) {
-      localStorage.setItem("signup_email", email);
-      router.push("/otp");
-    } else {
-      setMsg(data.message || "Login failed. Try again.");
-    }
-  };
+ const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setMsg("");
+
+  const res = await apiFetch("/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  setLoading(false);
+  if (res.ok) {
+    localStorage.setItem("signup_email", email);
+    router.push("/otp");
+  } else {
+    setMsg(data.message || "Login failed. Try again.");
+  }
+};
 
   return (
     <form onSubmit={handleLogin} className="space-y-5">

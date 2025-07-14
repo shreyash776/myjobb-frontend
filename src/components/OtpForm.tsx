@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { apiFetch } from "@/utils/api";
 
 export default function OtpForm() {
   const [otp, setOtp] = useState(Array(6).fill(""));
@@ -33,27 +34,40 @@ export default function OtpForm() {
 
   
   const handleVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMsg("");
-    const otpStr = otp.join("");
-    
-    setTimeout(() => {
-      setLoading(false);
-      if (otpStr === "123456") {
-        setMsg("OTP verified! (demo)");
-        
-      } else {
-        setMsg("Invalid OTP. Try again.");
-      }
-    }, 1000);
-  };
+  e.preventDefault();
+  setLoading(true);
+  setMsg("");
+  const otpStr = otp.join("");
+  const res = await apiFetch("/verify-otp", {
+    method: "POST",
+    body: JSON.stringify({ email, otp: otpStr }),
+  });
+  const data = await res.json();
+  setLoading(false);
+  if (res.ok) {
+    setMsg("OTP verified! Welcome to MyJobb 🎉");
+    // Optionally redirect to dashboard
+  } else {
+    setMsg(data.message || "Invalid OTP. Try again.");
+  }
+};
 
-  const handleResend = async () => {
-    setResendDisabled(true);
-    setMsg("OTP resent! (demo)");
-    setTimeout(() => setResendDisabled(false), 30000); // 30s cooldown
-  };
+
+ const handleResend = async () => {
+  setResendDisabled(true);
+  setMsg("");
+  const res = await apiFetch("/resend-otp", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+  const data = await res.json();
+  if (res.ok) {
+    setMsg("OTP resent! Check your email.");
+  } else {
+    setMsg(data.message || "Could not resend OTP.");
+  }
+  setTimeout(() => setResendDisabled(false), 30000);
+};
 
   return (
     <form onSubmit={handleVerify} className="space-y-5 ">

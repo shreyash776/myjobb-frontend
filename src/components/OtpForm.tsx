@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "@/utils/api";
 
 import { useRouter } from "next/navigation";
@@ -13,7 +13,11 @@ export default function OtpForm() {
  const router = useRouter();
   
   const email = typeof window !== "undefined" ? localStorage.getItem("signup_email") : "";
-
+ useEffect(() => {
+  if (!email) {
+    router.replace("/signup");
+  }
+}, [email, router]);
   
   const handleChange = (value: string, idx: number) => {
     if (!/^\d*$/.test(value)) return; 

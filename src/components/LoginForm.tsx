@@ -11,12 +11,12 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState("");
+  // const [msg, setMsg] = useState("");
 
  const handleLogin = async (e: React.FormEvent) => {
   e.preventDefault();
   setLoading(true);
-  setMsg("");
+  // setMsg("");
 
   try {
     const res = await apiFetch("/api/users/login", {
@@ -33,10 +33,12 @@ export default function LoginForm() {
       toast.success("Login successful! Welcome back to MyJobb 🎉");
       router.push("/dashboard");
     } else {
-      setMsg(data.message || "Login failed. Try again.");
+      // setMsg(data.message || "Login failed. Try again.");
+      toast.error(data.message || "Login failed. Try again.");
     }
   } catch {
-    setMsg("Network error. Please try again.");
+    // setMsg("Network error. Please try again.");
+    toast.error("Network error. Please check your connection and try again.");
   } finally {
     setLoading(false);
   }
@@ -77,7 +79,6 @@ export default function LoginForm() {
   )}
 </button>
 
-      {msg && <div className="text-red-500 text-center">{msg}</div>}
       <div className="flex items-center my-4">
         <hr className="flex-grow border-gray-200" />
         <span className="mx-2 text-gray-400 text-sm">or continue with</span>

@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { apiFetch } from "@/utils/api";
 
+import { useRouter } from "next/navigation";
 export default function OtpForm() {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [loading, setLoading] = useState(false);
@@ -9,7 +10,7 @@ export default function OtpForm() {
   const [resendDisabled, setResendDisabled] = useState(false);
 
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
-
+ const router = useRouter();
   
   const email = typeof window !== "undefined" ? localStorage.getItem("signup_email") : "";
 
@@ -45,8 +46,11 @@ export default function OtpForm() {
   const data = await res.json();
   setLoading(false);
   if (res.ok) {
+    if (data.token) {
+      localStorage.setItem("auth_token", data.token);
+    }
     setMsg("OTP verified! Welcome to MyJobb 🎉");
-    // Optionally redirect to dashboard
+     router.push("/dashboard");
   } else {
     setMsg(data.message || "Invalid OTP. Try again.");
   }

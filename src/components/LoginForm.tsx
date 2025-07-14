@@ -22,9 +22,10 @@ export default function LoginForm() {
   });
   const data = await res.json();
   setLoading(false);
-  if (res.ok) {
+  if (res.ok && data.token) {
     localStorage.setItem("signup_email", email);
-    router.push("/otp");
+    localStorage.setItem("auth_token", data.token);
+    router.push("/dashboard");
   } else {
     setMsg(data.message || "Login failed. Try again.");
   }

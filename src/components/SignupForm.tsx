@@ -69,13 +69,13 @@ export default function SignupForm() {
         onChange={e => setPassword(e.target.value)}
       />
       <button
-        className="w-full text-black bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
+        className="w-full text-black bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition  flex justify-center items-center"
         type="submit"
         disabled={loading}
         
       >
         {loading ? (
-    <FaSpinner className="animate-spin mr-2" />
+    <FaSpinner className="animate-spin " />
   ) : (
     "Sign up"
   )}

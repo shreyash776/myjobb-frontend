@@ -18,19 +18,27 @@ export default function LoginForm() {
   setLoading(true);
   setMsg("");
 
-  const res = await apiFetch("/api/users/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-  });
-  const data = await res.json();
-  setLoading(false);
-  if (res.ok && data.token) {
-    localStorage.setItem("signup_email", email);
-    toast.success("Login successful! Welcome back to MyJobb 🎉");
-   
-    router.push("/dashboard");
-  } else {
-    setMsg(data.message || "Login failed. Try again.");
+  try {
+    const res = await apiFetch("/api/users/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", 
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("signup_email", email);
+      toast.success("Login successful! Welcome back to MyJobb 🎉");
+      router.push("/dashboard");
+    } else {
+      setMsg(data.message || "Login failed. Try again.");
+    }
+  } catch {
+    setMsg("Network error. Please try again.");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -58,16 +66,17 @@ export default function LoginForm() {
         <Link href="#" className="text-xs text-gray-500 hover:underline">Forgot Password?</Link>
       </div>
       <button
-        className="w-full bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
-        type="submit"
-        disabled={loading}
-      >
-        {loading ? (
-          <FaSpinner className="animate-spin mr-2" />
-        ) : (
-          "Login"
-        )}
-      </button>
+  className="w-full bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition flex justify-center items-center"
+  type="submit"
+  disabled={loading}
+>
+  {loading ? (
+    <FaSpinner className="animate-spin" />
+  ) : (
+    "Login"
+  )}
+</button>
+
       {msg && <div className="text-red-500 text-center">{msg}</div>}
       <div className="flex items-center my-4">
         <hr className="flex-grow border-gray-200" />

@@ -40,28 +40,34 @@ export default function OtpForm() {
   };
 
   
-  const handleVerify = async (e: React.FormEvent) => {
+ const handleVerify = async (e: React.FormEvent) => {
   e.preventDefault();
   setLoading(true);
   setMsg("");
-  const otpStr = otp.join("");
-  const res = await apiFetch("/api/users/verify-otp", {
-    method: "POST",
-    body: JSON.stringify({ email, otp: otpStr }),
-  });
-  const data = await res.json();
-  setLoading(false);
-  if (res.ok) {
-    if (data.token) {
-      localStorage.setItem("auth_token", data.token);
-    toast.success("OTP verified! Welcome to MyJobb 🎉");
 
+  try {
+    const otpStr = otp.join("");
+    const res = await apiFetch("/api/users/verify-otp", {
+      method: "POST",
+      body: JSON.stringify({ email, otp: otpStr }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", 
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      toast.success("OTP verified! Welcome to MyJobb 🎉");
+      router.push("/dashboard");
+    } else {
+      toast.error(data.message || "Invalid OTP. Try again.");
+      setMsg(data.message || "Invalid OTP. Try again.");
     }
-    setMsg("OTP verified! Welcome to MyJobb 🎉");
-     router.push("/dashboard");
-  } else {
-    toast.error(data.message || "Invalid OTP. Try again.");
-    setMsg(data.message || "Invalid OTP. Try again.");
+  } catch {
+    toast.error("Network error. Please try again.");
+    setMsg("Network error. Please try again.");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -109,12 +115,12 @@ export default function OtpForm() {
 </div>
 
       <button
-        className="w-full bg-green-700 text-white rounded-full p-3 font-semibold hover:bg-black transition"
+        className="w-full bg-green-700 text-white rounded-full p-3 font-semibold hover:bg-black transition  flex justify-center items-center"
         type="submit"
         disabled={loading}
       >
          {loading ? (
-    <FaSpinner className="animate-spin mr-2" />
+    <FaSpinner className="animate-spin " />
   ) : (
     "Verify OTP"
   )}

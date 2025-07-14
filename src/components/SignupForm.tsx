@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import { apiFetch } from "@/utils/api"
 export default function SignupForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -12,25 +12,21 @@ export default function SignupForm() {
   const [msg, setMsg] = useState("");
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // setLoading(true);
-    setMsg("");
-    
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const data = await res.json();
-    // setLoading(false);
-    if (res.ok) {
-      
-      localStorage.setItem("signup_email", email);
-      router.push("/otp");
-    } else {
-      setMsg(data.message || "Signup failed. Try again.");
-    }
-  };
+  e.preventDefault();
+  setMsg("");
+
+  const res = await apiFetch("/signup", {
+    method: "POST",
+    body: JSON.stringify({ name: username, email, password }),
+  });
+  const data = await res.json();
+  if (res.ok) {
+    localStorage.setItem("signup_email", email);
+    router.push("/otp");
+  } else {
+    setMsg(data.message || "Signup failed. Try again.");
+  }
+};
 
   return (
     <form onSubmit={handleSignup} className="space-y-5">

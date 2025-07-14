@@ -12,7 +12,7 @@ const navItems = [
 
 export default function Sidebar({ onClose }: { onClose?: () => void }) {
   return (
-    <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg relative">
+    <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg sticky top-0 h-screen relative">
       
       {onClose && (
         <button

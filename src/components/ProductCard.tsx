@@ -20,7 +20,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition p-4 flex flex-col"
+      className="cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition p-4 flex flex-col border border-black hover:border-green-600"
     >
       <Image
         src={product.thumbnail}

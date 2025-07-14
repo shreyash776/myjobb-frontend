@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiFetch } from "@/utils/api"
+import toast from "react-hot-toast";
 export default function SignupForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ export default function SignupForm() {
   e.preventDefault();
   setMsg("");
  setLoading(true);
+
   const res = await apiFetch("/api/users/signup", {
     method: "POST",
     body: JSON.stringify({ name: username, email, password }),
@@ -24,10 +26,12 @@ export default function SignupForm() {
   const data = await res.json();
   if (res.ok) {
     localStorage.setItem("signup_email", email);
+    toast.success("OTP sent successfully! Please check your email.");
    
     router.push("/otp");
 
   } else {
+    toast.error(data.message || "Signup failed. Try again.");
     setMsg(data.message || "Signup failed. Try again.");
   }
 };

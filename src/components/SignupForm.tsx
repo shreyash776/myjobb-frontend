@@ -18,6 +18,8 @@ export default function SignupForm() {
   const res = await apiFetch("/api/users/signup", {
     method: "POST",
     body: JSON.stringify({ name: username, email, password }),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include", 
   });
   const data = await res.json();
   if (res.ok) {

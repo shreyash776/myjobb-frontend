@@ -24,7 +24,7 @@ export default function LoginForm() {
   setLoading(false);
   if (res.ok && data.token) {
     localStorage.setItem("signup_email", email);
-    localStorage.setItem("auth_token", data.token);
+   
     router.push("/dashboard");
   } else {
     setMsg(data.message || "Login failed. Try again.");

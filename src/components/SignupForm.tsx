@@ -8,14 +8,14 @@ export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-//   const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
   const handleSignup = async (e: React.FormEvent) => {
   e.preventDefault();
   setMsg("");
-
-  const res = await apiFetch("/signup", {
+ setLoading(true);
+  const res = await apiFetch("/api/users/signup", {
     method: "POST",
     body: JSON.stringify({ name: username, email, password }),
   });
@@ -39,6 +39,7 @@ export default function SignupForm() {
         required
         value={username}
         onChange={e => setUsername(e.target.value)}
+        disabled={loading}
       />
       <input
         className="w-full text-black border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -47,8 +48,10 @@ export default function SignupForm() {
         required
         value={email}
         onChange={e => setEmail(e.target.value)}
+        disabled={loading}
       />
       <input
+      disabled={loading}
         className="w-full text-black border rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
         type="password"
         placeholder="Password"
@@ -56,20 +59,21 @@ export default function SignupForm() {
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      {/* <button
+      <button
         className="w-full text-black bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
         type="submit"
         disabled={loading}
+        
       >
         {loading ? "Signing up..." : "Sign up"}
-      </button> */}
+      </button>
 
-      <Link
+      {/* <Link
   href="/otp"
   className="block w-full text-center bg-black text-white rounded-full p-3 font-semibold hover:bg-green-700 transition"
 >
   Sign up
-</Link>
+</Link> */}
       {msg && <div className="text-red-500 text-center">{msg}</div>}
       <div className="text-center text-gray-400 mt-4">
         Already have an account?{" "}

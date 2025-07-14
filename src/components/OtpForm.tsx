@@ -38,7 +38,7 @@ export default function OtpForm() {
   setLoading(true);
   setMsg("");
   const otpStr = otp.join("");
-  const res = await apiFetch("/verify-otp", {
+  const res = await apiFetch("/api/users/verify-otp", {
     method: "POST",
     body: JSON.stringify({ email, otp: otpStr }),
   });

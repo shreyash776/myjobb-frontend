@@ -16,7 +16,7 @@ export default function LoginForm() {
   setLoading(true);
   setMsg("");
 
-  const res = await apiFetch("/login", {
+  const res = await apiFetch("/api/users/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });

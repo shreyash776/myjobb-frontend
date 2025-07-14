@@ -22,7 +22,9 @@ export default function SignupForm() {
   const data = await res.json();
   if (res.ok) {
     localStorage.setItem("signup_email", email);
+   
     router.push("/otp");
+
   } else {
     setMsg(data.message || "Signup failed. Try again.");
   }

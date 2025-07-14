@@ -53,7 +53,7 @@ export default function DashboardCharts({ products }: DashboardChartsProps) {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
       <div className="bg-black rounded-xl shadow p-4 h-100">
-        <h3 className="font-semibold mb-2 text-black">Category Distribution</h3>
+        <h3 className="font-semibold mb-2 text-white">Category Distribution</h3>
           <ResponsivePie
     data={categoryCounts}
     margin={{ top: 20, right: 20, bottom: 60, left: 20 }}

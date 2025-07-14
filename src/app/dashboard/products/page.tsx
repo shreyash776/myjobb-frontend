@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
-
+import { ClipLoader } from 'react-spinners';
 const PRODUCTS_PER_PAGE = 12;
 
 type Product = {
@@ -124,8 +124,10 @@ export default function ProductsPage() {
         
 
       {loading ? (
-        <div className="text-center text-green-700 font-semibold">Loading...</div>
-      ) : products.length === 0 ? (
+  <div className="flex justify-center items-center py-10">
+    <ClipLoader color="#22c55e" loading={loading} size={40} />
+  </div>
+): products.length === 0 ? (
         <div className="text-center text-gray-500 italic">
           {aiSearchMode
             ? "No products found matching your query."
@@ -140,11 +142,7 @@ export default function ProductsPage() {
                   product={product}
                   onClick={() => setSelectedProduct(product)}
                 />
-                {aiSearchMode && product.reason && (
-                  <div className="mt-2 text-sm text-gray-600 italic">
-                    AI: {product.reason}
-                  </div>
-                )}
+               
               </div>
             ))}
           </div>

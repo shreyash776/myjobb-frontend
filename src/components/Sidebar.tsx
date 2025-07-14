@@ -2,6 +2,7 @@
 import { Home, Table, BarChart2, Settings, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
@@ -11,9 +12,18 @@ const navItems = [
 ];
 
 export default function Sidebar({ onClose }: { onClose?: () => void }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch("/api/users/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    router.push("/"); // Redirect to home page
+  };
+
   return (
     <aside className="h-full w-64 bg-black text-white flex flex-col py-8 px-4 shadow-lg sticky top-0 h-screen relative">
-      
       {onClose && (
         <button
           onClick={onClose}
@@ -42,7 +52,10 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         ))}
       </nav>
       <div className="mt-auto">
-        <button className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-green-700 transition w-full">
+        <button
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-green-700 transition w-full"
+          onClick={handleLogout}
+        >
           <LogOut className="w-5 h-5" />
           <span className="font-medium">Logout</span>
         </button>

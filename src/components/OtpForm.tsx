@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "@/utils/api";
+import { FaSpinner } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
 export default function OtpForm() {
@@ -52,10 +54,13 @@ export default function OtpForm() {
   if (res.ok) {
     if (data.token) {
       localStorage.setItem("auth_token", data.token);
+    toast.success("OTP verified! Welcome to MyJobb 🎉");
+
     }
     setMsg("OTP verified! Welcome to MyJobb 🎉");
      router.push("/dashboard");
   } else {
+    toast.error(data.message || "Invalid OTP. Try again.");
     setMsg(data.message || "Invalid OTP. Try again.");
   }
 };
@@ -71,8 +76,11 @@ export default function OtpForm() {
   const data = await res.json();
   if (res.ok) {
     setMsg("OTP resent! Check your email.");
+    toast.success("OTP resent! Check your email.");
+
   } else {
     setMsg(data.message || "Could not resend OTP.");
+    toast.error(data.message || "Could not resend OTP.");
   }
   setTimeout(() => setResendDisabled(false), 30000);
 };
@@ -105,7 +113,11 @@ export default function OtpForm() {
         type="submit"
         disabled={loading}
       >
-        {loading ? "Verifying..." : "Verify"}
+         {loading ? (
+    <FaSpinner className="animate-spin mr-2" />
+  ) : (
+    "Verify OTP"
+  )}
       </button>
       <button
         type="button"

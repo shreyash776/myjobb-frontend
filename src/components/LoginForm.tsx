@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiFetch } from "@/utils/api";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -24,6 +26,7 @@ export default function LoginForm() {
   setLoading(false);
   if (res.ok && data.token) {
     localStorage.setItem("signup_email", email);
+    toast.success("Login successful! Welcome back to MyJobb 🎉");
    
     router.push("/dashboard");
   } else {
@@ -59,7 +62,11 @@ export default function LoginForm() {
         type="submit"
         disabled={loading}
       >
-        {loading ? "Logging in..." : "Login"}
+        {loading ? (
+          <FaSpinner className="animate-spin mr-2" />
+        ) : (
+          "Login"
+        )}
       </button>
       {msg && <div className="text-red-500 text-center">{msg}</div>}
       <div className="flex items-center my-4">

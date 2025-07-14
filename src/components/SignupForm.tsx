@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiFetch } from "@/utils/api"
 import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
 export default function SignupForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -73,7 +74,11 @@ export default function SignupForm() {
         disabled={loading}
         
       >
-        {loading ? "Signing up..." : "Sign up"}
+        {loading ? (
+    <FaSpinner className="animate-spin mr-2" />
+  ) : (
+    "Sign up"
+  )}
       </button>
 
       {/* <Link

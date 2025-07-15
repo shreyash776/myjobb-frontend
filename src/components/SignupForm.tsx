@@ -13,27 +13,35 @@ export default function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
-  const handleSignup = async (e: React.FormEvent) => {
+ const handleSignup = async (e: React.FormEvent) => {
   e.preventDefault();
   setMsg("");
- setLoading(true);
+  setLoading(true);
 
-  const res = await apiFetch("/api/users/signup", {
-    method: "POST",
-    body: JSON.stringify({ name: username, email, password }),
-    headers: { "Content-Type": "application/json" },
-    credentials: "include", 
-  });
-  const data = await res.json();
-  if (res.ok) {
-    localStorage.setItem("signup_email", email);
-    toast.success("OTP sent successfully! Please check your email.");
-   
-    router.push("/otp");
+  try {
+    const res = await apiFetch("/api/users/signup", {
+      method: "POST",
+      body: JSON.stringify({ name: username, email, password }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
 
-  } else {
-    toast.error(data.message || "Signup failed. Try again.");
-    setMsg(data.message || "Signup failed. Try again.");
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("signup_email", email);
+      toast.success("OTP sent successfully! Please check your email.");
+      router.push("/otp");
+    } else {
+      toast.error(data.message || "Signup failed. Try again.");
+      setMsg(data.message || "Signup failed. Try again.");
+    }
+  } catch (err) {
+    console.error("Signup error:", err);
+    toast.error("An unexpected error occurred. Please try again later.");
+    setMsg("An unexpected error occurred. Please try again later.");
+  } finally {
+    setLoading(false); 
   }
 };
 
